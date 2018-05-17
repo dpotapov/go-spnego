@@ -6,9 +6,9 @@ import (
 	"os/user"
 	"strings"
 
-	"gopkg.in/jcmturner/gokrb5.v3/client"
-	"gopkg.in/jcmturner/gokrb5.v3/config"
-	"gopkg.in/jcmturner/gokrb5.v3/credentials"
+	"gopkg.in/jcmturner/gokrb5.v5/client"
+	"gopkg.in/jcmturner/gokrb5.v5/config"
+	"gopkg.in/jcmturner/gokrb5.v5/credentials"
 )
 
 type krb5 struct {

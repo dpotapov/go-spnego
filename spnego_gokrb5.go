@@ -65,10 +65,13 @@ func (k *krb5) makeClient() error {
 	return err
 }
 
-func (k *krb5) SetSPNEGOHeader(req *http.Request) error {
-	h, err := canonicalizeHostname(req.URL.Hostname())
-	if err != nil {
-		return err
+func (k *krb5) SetSPNEGOHeader(req *http.Request, canonicalize bool) error {
+	h := req.URL.Hostname()
+	if canonicalize {
+		var err error
+		if h, err = canonicalizeHostname(h); err != nil {
+			return err
+		}
 	}
 
 	if err := k.makeCfg(); err != nil {

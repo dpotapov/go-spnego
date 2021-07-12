@@ -5,7 +5,8 @@ import "net/http"
 // Transport extends the native http.Transport to provide SPNEGO communication
 type Transport struct {
 	http.Transport
-	spnego Provider
+	spnego         Provider
+	NoCanonicalize bool
 }
 
 // Error is used to distinguish errors from underlying libraries (gokrb5 or sspi).
@@ -24,7 +25,7 @@ func (t *Transport) RoundTrip(req *http.Request) (*http.Response, error) {
 		t.spnego = New()
 	}
 
-	if err := t.spnego.SetSPNEGOHeader(req); err != nil {
+	if err := t.spnego.SetSPNEGOHeader(req, !t.NoCanonicalize); err != nil {
 		return nil, &Error{Err: err}
 	}
 
